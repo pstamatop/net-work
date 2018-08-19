@@ -2,5 +2,36 @@ panagiota:
   firstName: Panagiota 
   lastName: Example
   email: panagiota@example.com
-  phone: 32235
+  phone: "32235"
   password_digest: <%= User.digest('password') %>
+
+anastasia:
+  firstName: Anastasia 
+  lastName: Antonelou
+  email: anastasia@example.com
+  phone: "35222"
+  password_digest: <%= User.digest('password') %>
+
+
+lana:
+  firstName: Lana 
+  lastName: Kane
+  email: hands@example.gov
+  phone: "423424"
+  password_digest: <%= User.digest('password') %>
+
+malory:
+  firstName: Malory 
+  lastName: Archer
+  email: boss@example.gov
+  phone: "42342342"
+  password_digest: <%= User.digest('password') %>
+
+<% 30.times do |n| %>
+user_<%= n %>:
+  firstName: "Example"
+  lastName:  <%= "User#{n}" %>
+  email: <%= "user-#{n}@example.com" %>
+  phone: "343234234"
+  password_digest: <%= User.digest('password') %>
+<% end %>
