@@ -4,6 +4,7 @@ panagiota:
   email: panagiota@example.com
   phone: "32235"
   password_digest: <%= User.digest('password') %>
+  admin: true
 
 anastasia:
   firstName: Anastasia 
