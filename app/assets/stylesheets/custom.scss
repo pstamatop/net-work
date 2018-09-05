@@ -25,6 +25,7 @@ textarea {
   resize: vertical;
 }
 
+
 .center {
   text-align: center;
   background-image: asset_url("accountant-accounting-bankbook.jpg");
@@ -206,3 +207,13 @@ input {
   }
 }
 
+/* Navbar */
+
+
+.navbar-inverse .navbar-nav > li > a {
+  color: black;
+}
+
+.navbar {
+  background-color: #8f9a9a ;
+ }

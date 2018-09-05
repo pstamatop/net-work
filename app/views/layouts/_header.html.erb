@@ -3,7 +3,7 @@
     <%= link_to "net-work", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
+        <li class="<%= 'active' if current_page?(root_path) %>"><%=link_to "Home", root_path %></li>
         <% if logged_in? %>
           <% if current_user.admin? %> 
                     <li><%= link_to "Users", users_path %></li>
@@ -25,6 +25,7 @@
               </li>
             </ul>
           </li>
+
         <% else %>
           <li><%= link_to "Help", help_path %></li>
           <li><%= link_to "Log in", login_path %></li>
