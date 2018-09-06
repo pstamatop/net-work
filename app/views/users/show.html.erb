@@ -19,13 +19,13 @@
       	<%= f.text_field :curwork, class: 'form-control' %>
 
       <%= f.label :"Working Experience" %>
-      <%= f.text_field :prevwork,  class: 'form-control'%>
+      <%= f.text_area :prevwork, :cols => "10", :rows => '7', class: 'form-control'%>
 
       <%= f.label :Education %>
-      <%= f.text_field :education,  class: 'form-control' %>
+      <%= f.text_area :education, :cols => "10", :rows => '3', class: 'form-control'%>
 
       <%= f.label :Skills %>
-      <%= f.text_field :skills,  class: 'form-control' %>
+      <%= f.text_area :skills, :cols => "10", :rows => '6', class: 'form-control'%>
 
 
       <%= f.submit yield(:button_text), class: "btn btn" %>

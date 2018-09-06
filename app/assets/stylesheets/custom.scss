@@ -195,6 +195,7 @@ input {
   }
 }
 
+
 /* Users index */
 
 .users {
@@ -217,3 +218,8 @@ input {
 .navbar {
   background-color: #8f9a9a ;
  }
+
+/* Disable resizing for some browsers */
+textarea {
+  resize: none;
+}
