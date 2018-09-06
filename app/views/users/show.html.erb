@@ -12,24 +12,31 @@
     <% if @user == current_user %>
 		<% provide(:button_text, 'Update Profile') %>
       
-      <%= form_for(@user) do |f| %>
-      	<%= render 'shared/error_messages', object: @user %>
+      	<%= form_for(@user) do |f| %>
+      		<%= render 'shared/error_messages', object: @user %>
 
-      	<%= f.label :"Current Position"  %>
-      	<%= f.text_field :curwork, class: 'form-control' %>
+      		<%= f.label :"Current Position"  %>
+      		<%= f.text_field :curwork, class: 'form-control' %>
 
-      <%= f.label :"Working Experience" %>
-      <%= f.text_area :prevwork, :cols => "10", :rows => '7', class: 'form-control'%>
+      		<%= f.label :"Working Experience" %>
+      		<%= f.text_area :prevwork, :cols => "10", :rows => '7', class: 'form-control'%>
 
-      <%= f.label :Education %>
-      <%= f.text_area :education, :cols => "10", :rows => '3', class: 'form-control'%>
+     		<%= f.label :Education %>
+      		<%= f.text_area :education, :cols => "10", :rows => '3', class: 'form-control'%>
 
-      <%= f.label :Skills %>
-      <%= f.text_area :skills, :cols => "10", :rows => '6', class: 'form-control'%>
+      		<%= f.label :Skills %>
+      		<%= f.text_area :skills, :cols => "10", :rows => '6', class: 'form-control'%>
 
 
-      <%= f.submit yield(:button_text), class: "btn btn" %>
-	<% end %>
+      		<%= f.submit yield(:button_text), class: "btn btn" %>
+
+		<% end %>
+	<% else %>
+    	 <p> <b>Current Position:</b> <%=@user.curwork%><br>
+    	 	<b>Working Experience: </b> <%= @user.prevwork %><br>
+    	 	<b>Education: </b><%= @user.education %><br>
+    	 	<b>Skills: </b><%= @user.skills %>
+      	</p>
 	<% end %>
   </div>
 
