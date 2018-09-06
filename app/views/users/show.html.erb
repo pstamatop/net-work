@@ -8,4 +8,29 @@
       </h1>
     </section>
   </aside>
+   <div class="col-md-8">
+    <% if @user == current_user %>
+		<% provide(:button_text, 'Update Profile') %>
+      
+      <%= form_for(@user) do |f| %>
+      	<%= render 'shared/error_messages', object: @user %>
+
+      	<%= f.label :"Current Position"  %>
+      	<%= f.text_field :curwork, class: 'form-control' %>
+
+      <%= f.label :"Working Experience" %>
+      <%= f.text_field :prevwork,  class: 'form-control'%>
+
+      <%= f.label :Education %>
+      <%= f.text_field :education,  class: 'form-control' %>
+
+      <%= f.label :Skills %>
+      <%= f.text_field :skills,  class: 'form-control' %>
+
+
+      <%= f.submit yield(:button_text), class: "btn btn" %>
+	<% end %>
+	<% end %>
+  </div>
+
 </div>
