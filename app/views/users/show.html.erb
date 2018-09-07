@@ -5,6 +5,8 @@
       <h1>
         <% if @user.profilepic.present? %>
       		<%= image_tag(@user.profilepic.url,  size: "350x350") %>
+      	<% else %>
+			<%= image_tag("default-avatar.png", size: "350x350")  %>
 		<% end %>
 		<br><br>
         <%= [@user.firstName, @user.lastName].join(' ') %>
