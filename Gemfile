@@ -14,6 +14,8 @@ gem 'jbuilder',     '2.7.0'
 gem 'rb-readline'
 gem 'will_paginate',           '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
+gem 'carrierwave', '~> 1.0'
+gem 'mini_magick', '~> 4.3'
 
 
 group :development, :test do
