@@ -40,12 +40,12 @@
 
 		<% end %>
 	<% else %>
-    	 <p> <font size= "5"><b><%=@user.curwork%><br></b></font>
+    	  <font size= "5"><b><br><%=@user.curwork%></b></font>
     	 	<br><br>
     	 	<font color= "#666666"><b><i>Previous Working Experience </b></i></font><br><%= simple_format(@user.prevwork) %><br><br>
     	 	<font color= "#666666"><b><i>Education </b></i></font><br><%= simple_format(@user.education) %><br><br>
     	 	<font color= "#666666"><b><i>Skills </b></i></font><br><%= simple_format(@user.skills) %>
-      	</p>
+      
 	<% end %>
   </div>
 
