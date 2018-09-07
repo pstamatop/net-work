@@ -8,17 +8,21 @@
       	<% else %>
 			<%= image_tag("default-avatar.png", size: "350x350")  %>
 		<% end %>
-		<br><br>
-        <%= [@user.firstName, @user.lastName].join(' ') %>
       </h1>
     </section>
   </aside>
    <div class="col-md-8">
+   	<font size= "6"><b><%= [@user.firstName, @user.lastName].join(' ') %></b></font>
     <% if @user == current_user %>
 		<% provide(:button_text, 'Update Profile') %>
       
       	<%= form_for(@user) do |f| %>
       		<%= render 'shared/error_messages', object: @user %>
+
+      		<%= f.label :"Profile picture" %>
+          	<%= f.file_field :profilepic,
+                            accept: 'image/jpeg,image/gif,image/png', 
+                            class: "form-control"  %>  
 
       		<%= f.label :"Current Position"  %>
       		<%= f.text_field :curwork, class: 'form-control' %>
@@ -32,19 +36,15 @@
       		<%= f.label :Skills %>
       		<%= f.text_area :skills, :cols => "10", :rows => '6', class: 'form-control'%>
 
-      		<%= f.label :"Profile picture" %>
-          	<%= f.file_field :profilepic,
-                            accept: 'image/jpeg,image/gif,image/png', 
-                            class: "form-control"  %>  
-
       		<%= f.submit yield(:button_text), class: "btn btn" %>
 
 		<% end %>
 	<% else %>
-    	 <p> <b>Current Position:</b> <%=@user.curwork%><br>
-    	 	<b>Working Experience: </b> <%= @user.prevwork %><br>
-    	 	<b>Education: </b><%= @user.education %><br>
-    	 	<b>Skills: </b><%= @user.skills %>
+    	 <p> <font size= "5"><b><%=@user.curwork%><br></b></font>
+    	 	<br><br>
+    	 	<font color= "#666666"><b><i>Previous Working Experience </b></i></font><br><%= simple_format(@user.prevwork) %><br><br>
+    	 	<font color= "#666666"><b><i>Education </b></i></font><br><%= simple_format(@user.education) %><br><br>
+    	 	<font color= "#666666"><b><i>Skills </b></i></font><br><%= simple_format(@user.skills) %>
       	</p>
 	<% end %>
   </div>
