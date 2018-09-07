@@ -1,3 +1,9 @@
-<%= link_to gravatar_for(current_user, size: 50), current_user %>
-<h1><%= [current_user.firstName, current_user.lastName].join(' ') %></h1>
+<h1>
+<% if current_user.profilepic.present? %>
+	<%= image_tag(current_user.profilepic.url,  size: "140x140") %>
+<% else %>
+	<%= image_tag("default-avatar.png", size: "140x140")  %>
+<% end %>
+<br><br>
+<%= [current_user.firstName, current_user.lastName].join(' ') %></h1>
 <span><%= link_to "View my profile", current_user %></span>
