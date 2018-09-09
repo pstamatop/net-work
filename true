@@ -1,0 +1,2 @@
+      invoke  active_record
+      create    db/migrate/20180909114816_give_default_valueeducation_ispublic.rb

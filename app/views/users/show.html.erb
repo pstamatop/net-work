@@ -4,9 +4,9 @@
     <section class="user_info">
       <h1>
         <% if @user.profilepic.present? %>
-      		<%= image_tag(@user.profilepic.url,  size: "350x350") %>
+      		<%= image_tag(@user.profilepic.url,  size: "330x330") %>
       	<% else %>
-			<%= image_tag("default-avatar.png", size: "350x350")  %>
+			<%= image_tag("default-avatar.png", size: "330x330")  %>
 		<% end %>
       </h1>
     </section>

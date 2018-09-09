@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180907093755) do
+ActiveRecord::Schema.define(version: 20180909121029) do
 
   create_table "users", force: :cascade do |t|
     t.string "firstName"
@@ -25,8 +25,11 @@ ActiveRecord::Schema.define(version: 20180907093755) do
     t.text "prevwork"
     t.text "education"
     t.text "skills"
-    t.string "avatar"
     t.string "profilepic"
+    t.boolean "curwork_ispublic", default: true
+    t.boolean "prevwork_ispublic", default: true
+    t.boolean "education_ispublic", default: true
+    t.boolean "skills_ispublic", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
