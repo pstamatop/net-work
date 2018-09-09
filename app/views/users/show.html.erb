@@ -19,32 +19,65 @@
       	<%= form_for(@user) do |f| %>
       		<%= render 'shared/error_messages', object: @user %>
 
-      		<%= f.label :"Profile picture" %>
+      		<br>
+      		<%= f.label :"Change your profile picture:" %>
           	<%= f.file_field :profilepic,
                             accept: 'image/jpeg,image/gif,image/png', 
                             class: "form-control"  %>  
-
-      		<%= f.label :"Current Position"  %>
+            <br>
+      		<%= f.label :"Edit your current position:"  %>
       		<%= f.text_field :curwork, class: 'form-control' %>
 
-      		<%= f.label :"Working Experience" %>
+            <%= f.label :curwork_ispublic, class: "checkbox inline" do %>
+        		<%= f.check_box :curwork_ispublic %>
+        		<span>Make this section public: </span>
+      		<% end %>
+
+      		<br>
+      		<%= f.label :"Edit your working experience:" %>
       		<%= f.text_area :prevwork, :cols => "10", :rows => '7', class: 'form-control'%>
 
-     		<%= f.label :Education %>
+      		<%= f.label :prevwork_ispublic, class: "checkbox inline" do %>
+        		<%= f.check_box :prevwork_ispublic %>
+        		<span>Make this section public: </span>
+      		<% end %>
+
+      		<br>
+     		<%= f.label :"Edit your education:" %>
       		<%= f.text_area :education, :cols => "10", :rows => '3', class: 'form-control'%>
 
-      		<%= f.label :Skills %>
+      		<%= f.label :education_ispublic, class: "checkbox inline" do %>
+        		<%= f.check_box :education_ispublic %>
+        		<span>Make this section public: </span>
+      		<% end %>
+
+      		<br>
+      		<%= f.label :"Edit your skills:" %>
       		<%= f.text_area :skills, :cols => "10", :rows => '6', class: 'form-control'%>
+
+      		<%= f.label :skills_ispublic, class: "checkbox inline" do %>
+        		<%= f.check_box :skills_ispublic %>
+        		<span>Make this section public: </span>
+      		<% end %>
+      		<br>
 
       		<%= f.submit yield(:button_text), class: "btn btn" %>
 
 		<% end %>
 	<% else %>
+		<% if @user.curwork_ispublic %>
     	  <font size= "5"><b><br><%=@user.curwork%></b></font>
+  		<% end %>
     	 	<br><br>
-    	 	<font color= "#666666"><b><i>Previous Working Experience </b></i></font><br><%= simple_format(@user.prevwork) %><br><br>
-    	 	<font color= "#666666"><b><i>Education </b></i></font><br><%= simple_format(@user.education) %><br><br>
-    	 	<font color= "#666666"><b><i>Skills </b></i></font><br><%= simple_format(@user.skills) %>
+    	 	<% if @user.prevwork_ispublic %>
+    	 		<font color= "#666666"><b><i>Previous Working Experience </b></i></font><br><%= simple_format(@user.prevwork) %><br><br>
+    	 	<% end %>
+    	 	<% if @user.education_ispublic %>
+    	 		<font color= "#666666"><b><i>Education </b></i></font><br><%= simple_format(@user.education) %><br><br>
+    	 	<% end %>
+    	 	<% if @user.skills_ispublic %>
+    	 		<font color= "#666666"><b><i>Skills </b></i></font><br><%= simple_format(@user.skills) %>
+    	 	<% end %>
       
 	<% end %>
   </div>
