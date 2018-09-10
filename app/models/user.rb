@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  	has_many :posts, dependent: :destroy
 	before_save { self.email = email.downcase }
 	validates :firstName, presence: true, length: { maximum: 50 }
 	validates :lastName, presence: true, length: { maximum: 50 }
@@ -18,4 +19,8 @@ class User < ApplicationRecord
                                                   BCrypt::Engine.cost
 		BCrypt::Password.create(string, cost: cost)
 	end
+
+	def feed
+    	Post.where("user_id = ?", id)
+  	end
 end
