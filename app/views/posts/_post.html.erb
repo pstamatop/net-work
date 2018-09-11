@@ -9,7 +9,11 @@
   	<%= post.content %>
   	<% if post.attachment? %>
   		<% post.attachment.each do |item| %>
+  		<% if item.content_type =~ /image/ %>
   			<%= image_tag item.url %>
+  		<% elsif item.content_type =~ /video/ %>
+  			<%= video_tag item.url, :size => "400x400", :controls =>true %>
+  		<% end %>
   	<% end %>
   	<% end %>
   	</span>

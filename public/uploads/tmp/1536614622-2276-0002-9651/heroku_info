@@ -1,0 +1,39 @@
+Generating public/private rsa key pair.
+Your identification has been saved in /home/aa/.ssh/id_rsa.
+Your public key has been saved in /home/aa/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:LhPaAEBMC1QTQ636NVZxyuRTf1NLPzEl66hv9yGUzg8 aa@aa-VirtualBox
+The key's randomart image is:
++---[RSA 2048]----+
+|B+o*o         . o|
+|.o. o. o o     B |
+| .. . + = .   + =|
+|   o   *   . =.o.|
+|  . . o S   ooo .|
+| .   B o   .+    |
+|  . + = . .  E . |
+|   .   o   .. = .|
+|           ... o.|
++----[SHA256]-----+
+
+
+
+
+$ rails test
+$ git add -A
+$ git commit -m "Add user following"
+$ git checkout master
+$ git merge following-users
+
+We can then push the code to the remote repository and deploy the application to production:
+
+$ git push
+$ git push heroku
+$ heroku pg:reset DATABASE
+$ heroku run rails db:migrate
+$ heroku run rails db:seed
+
+
+example@railstutorial.org
+foobar
+

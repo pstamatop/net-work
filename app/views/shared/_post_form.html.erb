@@ -4,7 +4,7 @@
     <%= f.text_area :content, placeholder: "Compose new post..." %>
   </div>
      <span class="picture">
-    <%= f.file_field :attachment, multiple: true %>
+    <%= f.file_field :attachment, multiple: true , accept: 'image/jpeg,image/gif,image/png,video/mp4,video/m4v,video/mpeg'%>
   </span>
   <%= f.submit "Post", class: "btn btn" %>
 <% end %>
