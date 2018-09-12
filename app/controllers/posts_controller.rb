@@ -19,6 +19,13 @@ class PostsController < ApplicationController
     redirect_to request.referrer || root_url
   end
 
+
+  def index
+    @user = User.find(params[:user_id])
+    @posts = current_user.posts.paginate(page: params[:page])
+  end
+
+
   private
 
     def post_params

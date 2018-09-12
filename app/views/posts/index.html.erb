@@ -1,0 +1,11 @@
+<% provide(:title, [@user.firstName, @user.lastName, ' Posts'].join(' ') ) %>
+<h1><%= [@user.firstName, @user.lastName].join(' ') %> - All Posts</h1>
+<h>Total number: <%= @user.posts.count %></h3>
+
+<% if @user.posts.any? %>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+      <%= will_paginate @posts %>
+    <% end %>
+
