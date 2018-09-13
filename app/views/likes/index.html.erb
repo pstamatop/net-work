@@ -1,0 +1,11 @@
+<% provide(:title, 'Post''s Likes') %>
+<h1>Users who liked this post</h1>
+<h>Total number: <%= @post.likes.count %></h3>
+
+<% if @post.likes.any? %>
+      <ol class="users">
+        <%= render @likes%>
+      </ol>
+      <%= will_paginate @likes %>
+    <% end %>
+

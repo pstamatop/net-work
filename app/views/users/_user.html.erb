@@ -1,6 +1,10 @@
 <% name = [user.firstName, user.lastName].join(' ')%>
 <li>
-  <%= gravatar_for user, size: 50 %>
+   <% if user.profilepic.present? %>
+  	<div class ="smallavatar"><%= link_to image_tag(user.profilepic.url,  size: 50), user %></div>
+  <% else %>
+	<div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 50), user %></div>
+  <% end %>
   <%= link_to name, user %>
   <% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "delete", user, method: :delete,

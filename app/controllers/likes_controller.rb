@@ -18,6 +18,11 @@ class LikesController < ApplicationController
     redirect_to request.referrer || root_url
   end
 
+  def index
+    @post = Post.find(params[:post_id])
+    @likes = @post.likes.paginate(page: params[:page])
+  end
+
 
 private
 	def already_liked?

@@ -31,5 +31,9 @@
   <%= link_to "Like", post_likes_path(post), method: :create %>
   <% end %>
   <br>
-  <p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+  <% if post.likes.count == 1%>
+    <p><%= link_to "1 Like", post_likes_path(post)%></p>
+  <% else %>
+    <p><%= link_to [post.likes.count, 'Likes'].join(' '), post_likes_path(post)%></p>
+  <% end %>
 </li>
