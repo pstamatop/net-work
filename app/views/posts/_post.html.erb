@@ -24,4 +24,12 @@
                                        data: { confirm: "Are you sure you want to delete this post?" } %>
     <% end %>
   </span>
+  <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
+  <% if pre_like %>
+    <%= link_to 'Unlike', post_like_path(post, pre_like), method: :delete %>
+  <% else %>
+  <%= link_to "Like", post_likes_path(post), method: :create %>
+  <% end %>
+  <br>
+  <p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
 </li>
