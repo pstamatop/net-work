@@ -32,8 +32,22 @@
   <% end %>
   <br>
   <% if post.likes.count == 1%>
-    <p><%= link_to "1 Like", post_likes_path(post)%></p>
+    <%= link_to "1 Like &emsp;", post_likes_path(post)%>
   <% else %>
-    <p><%= link_to [post.likes.count, 'Likes'].join(' '), post_likes_path(post)%></p>
+    <%= link_to [post.likes.count, 'Likes'].join(' '), post_likes_path(post)%>
   <% end %>
+  &nbsp&nbsp
+  <% if post.comments.count == 1%>
+    <%= link_to "1 Comment", post_comments_path(post)%>
+  <% else %>
+    <%= link_to [post.comments.count, 'Comments'].join(' '), post_comments_path(post)%>
+  <% end %>
+  <%= form_for([post,post.comments.build]) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="field">
+     <%= f.text_area :content, placeholder: "Write a comment..." %>
+    </div>
+    <%= f.submit "Submit comment", class: "btn btn-sm" %>
+  <% end %>
+  <br>
 </li>

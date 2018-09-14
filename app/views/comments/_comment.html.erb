@@ -1,0 +1,20 @@
+<li>
+  <% @user = User.find(comment.user_id) %>
+  <% if @user.profilepic.present? %>
+  	<div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 50), @user %></div>
+  <% else %>
+	   <div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 50), @user %></div>
+  <% end %>
+  <span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+  <span class="content">
+  	<%= comment.content %>
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(comment.created_at) %> ago.
+  	<% if current_user.id == comment.user_id %>
+    	<% @post = Post.find(comment.post_id) %>
+      <%= link_to "Delete comment",  post_comment_path(@post.id,comment.id), method: :delete,
+                                       data: { confirm: "Are you sure you want to delete this comment?" } %>
+    <% end %>
+  </span>
+</li>

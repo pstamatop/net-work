@@ -1,0 +1,19 @@
+<% provide(:title, 'Comments') %>
+<h1>Users who commented on this post</h1>
+<h>Total number of comments: <%= @post.comments.count %></h3>
+<br><br>
+<%= form_for([@post,@post.comments.build]) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="field">
+     <%= f.text_area :content, placeholder: "Write a comment..." %>
+    </div>
+    <%= f.submit "Submit comment", class: "btn btn-sm" %>
+  <% end %>
+  <br><br>
+<% if @post.comments.any? %>
+      <ol class="posts">
+        <%= render @comments%>
+      </ol>
+      <%= will_paginate @comments %>
+    <% end %>
+
