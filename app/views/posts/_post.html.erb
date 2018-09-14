@@ -32,7 +32,7 @@
   <% end %>
   <br>
   <% if post.likes.count == 1%>
-    <%= link_to "1 Like &emsp;", post_likes_path(post)%>
+    <%= link_to "1 Like", post_likes_path(post)%>
   <% else %>
     <%= link_to [post.likes.count, 'Likes'].join(' '), post_likes_path(post)%>
   <% end %>
