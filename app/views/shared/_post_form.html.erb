@@ -1,8 +1,9 @@
 <%= form_for(@post) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new post..." %>
+    <%= f.text_area :content, placeholder: "Make a new post..." %>
   </div>
+  	<%= image_tag("image-thumb.png", size: 30)%> Add a picture:
      <span class="picture">
     <%= f.file_field :attachment, multiple: true , accept: 'image/jpeg,image/gif,image/png,video/mp4,video/m4v,video/mpeg'%>
   </span>
