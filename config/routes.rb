@@ -19,4 +19,11 @@ Rails.application.routes.draw do
 	resources :posts do
 		resources :comments, only: [:create, :destroy, :index]
 	end
+	# TODO check routes
+	resources :users do
+    	resources :friendships, :friend_requests
+   		
+  	end
+	# resources :friendships
+	# TODO check routes
 end

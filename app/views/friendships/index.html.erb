@@ -1,0 +1,20 @@
+<h1>net-work</h1>
+
+<% if @friends %>
+	<h2>friends:</h2>
+
+	<ul>
+	<% @friends&.each do |user| %>
+		<li><%= user.firstName %></li>
+	<% end %>
+	</ul>
+<% end %>
+
+
+<h2>pending requests from users:</h2>
+
+<ul>
+<% @users_with_pending_requests&.each do |user| %>
+	<li><%= user.firstName %></li>
+<% end %>
+</ul>

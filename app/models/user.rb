@@ -2,6 +2,7 @@ class User < ApplicationRecord
   	has_many :posts, dependent: :destroy
   	has_many :likes, dependent: :destroy
   	has_many :comments, dependent: :destroy
+	has_many :friend_requests, source: 'receiver_id'
 
 	before_save { self.email = email.downcase }
 	validates :firstName, presence: true, length: { maximum: 50 }
@@ -26,4 +27,35 @@ class User < ApplicationRecord
 	def feed
     	Post.where("user_id = ?", id)
   	end
+
+  	def friends
+		ids = FriendRequest.where('request_receiver = ? OR request_sender = ?', id, id)
+			.where(status: :accepted).pluck(:request_receiver, :request_sender)
+			.flatten - [id]
+		User.where(id: ids)
+	end
+
+	def pending_requests
+		FriendRequest.where('request_receiver = ? ', id)
+					 	.where(status: :pending)
+	end
+
+	def get_user_from_pending_requests
+		User.find(pending_requests.pluck(:request_sender))
+	end
+
+	def request_friendship(other_user)
+		FriendRequest.create request_sender: id,
+								request_receiver: other_user.id,
+								status: :pending
+	end
+
+	def accept_friend_request(other_user)
+		FriendRequest.where(request_sender: other_user.id).update status: :accepted
+	end
+
+	def friends_with?(other_user)
+		(FriendRequest.where(request_sender: id, request_receiver: other_user.id).where(status: :accepted).any? ||
+		FriendRequest.where(request_sender: other_user.id, request_receiver: id).where(status: :accepted).any?)
+	end
 end
