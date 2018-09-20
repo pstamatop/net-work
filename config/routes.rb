@@ -21,9 +21,8 @@ Rails.application.routes.draw do
 	end
 	# TODO check routes
 	resources :users do
-    	resources :friendships, :friend_requests
-   		
+    	resources :friend_requests
   	end
-	# resources :friendships
+	resources :friendships
 	# TODO check routes
 end

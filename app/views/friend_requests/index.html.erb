@@ -1,0 +1,16 @@
+<h1>Notifications</h1>
+
+<h2>Pending Friend Requests</h2>
+
+<ul>
+<% current_user.pending_requests&.each do |request| %>
+	<% @id = request.request_sender %> 
+	<% @user = User.find(@id) %>
+	<li>
+		<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+		<span>|</span>
+		<span><%= link_to "Accept", "#" %></span>
+		<span><%= link_to "Decline", "#" %></span>
+	</li>
+<% end %>
+</ul>
