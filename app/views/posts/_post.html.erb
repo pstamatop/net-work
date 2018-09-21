@@ -7,6 +7,7 @@
   <span class="user"><%= link_to [post.user.firstName, post.user.lastName].join(' '), post.user %></span>
   <span class="content">
   	<%= post.content %>
+    <br>
   	<% if post.attachment? %>
   		<% post.attachment.each do |item| %>
   			<%= image_tag item.url %>
