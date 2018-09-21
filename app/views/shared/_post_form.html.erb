@@ -5,7 +5,11 @@
   </div>
   	<%= image_tag("image-thumb.png", size: 30)%> Add a picture:
      <span class="picture">
-    <%= f.file_field :attachment, multiple: true , accept: 'image/jpeg,image/gif,image/png,video/mp4,video/m4v,video/mpeg'%>
+    <%= f.file_field :attachment, multiple: true , accept: 'image/jpeg,image/gif,image/png'%>
   </span>
+  <%= image_tag("video-thumb.png", size: 36)%> Add a video:
+  <span class="picture">
+  <%=f.file_field :video_attachment%>
+</span>
   <%= f.submit "Post", class: "btn btn" %>
 <% end %>
