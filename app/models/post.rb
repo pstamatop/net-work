@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
   mount_uploaders :attachment, AvatarUploader
   mount_uploader :video_attachment, VideoUploader
+  mount_uploader :audio_attachment, AudioUploader
   serialize :attachment, JSON
   validates :user_id, presence: true
   #validates :content, presence: true, length: { maximum: 140 }
@@ -17,7 +18,7 @@ class Post < ApplicationRecord
   	# Validates that the post is not empty
     def not_empty
     	if not content.present?
-      		if not attachment.present? || video_attachment.present?
+      		if not attachment.present? || video_attachment.present? || audio_attachment.present?
       			errors.add(:post,"can't be empty.")
       		end
    		end

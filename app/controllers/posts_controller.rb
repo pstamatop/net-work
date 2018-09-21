@@ -29,7 +29,7 @@ class PostsController < ApplicationController
   private
 
     def post_params
-      params.require(:post).permit(:content,{attachment: []},:video_attachment)
+      params.require(:post).permit(:content,{attachment: []},:video_attachment,:audio_attachment)
     end
 
     def correct_user

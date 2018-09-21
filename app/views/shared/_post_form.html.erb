@@ -11,5 +11,9 @@
   <span class="picture">
   <%=f.file_field :video_attachment%>
 </span>
+<%= image_tag("music-thumb.png", size: 30)%> Add an audio file:
+  <span class="picture">
+  <%=f.file_field :audio_attachment%>
+</span>
   <%= f.submit "Post", class: "btn btn" %>
 <% end %>

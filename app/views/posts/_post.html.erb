@@ -13,7 +13,10 @@
   	<% end %>
     <% end %>
     <% if post.video_attachment? %>
-      <%= video_tag post.video_attachment_url, :size => "400x400", :controls =>true %>
+      <%= video_tag post.video_attachment_url, :size => "500x500", :controls =>true %>
+    <%end%>
+     <% if post.audio_attachment? %>
+      <%= audio_tag post.audio_attachment_url, :controls =>true %>
     <%end%>
   	</span>
   <span class="timestamp">
