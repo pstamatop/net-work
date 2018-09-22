@@ -59,14 +59,21 @@
       		<% end %>
 
       		<br>
-      		<%= f.label :"Edit your skills:" %>
-      		<%= f.text_area :skills, :cols => "10", :rows => '6', class: 'form-control'%>
+          <%= f.label :"Choose your skills:"%>
+          <br><br>
+          <% for tskill in Tskill.all %>
+              <div class= "checkbox inline">
+              <%= check_box_tag "user[tskill_ids][]", tskill.id, @user.tskills.include?(tskill) %>
+              <span><%= tskill.name %></span>
+            </div>
+          <% end %>
 
-      		<%= f.label :skills_ispublic, class: "checkbox inline" do %>
-        		<%= f.check_box :skills_ispublic %>
-        		<span>Make this section public: </span>
-      		<% end %>
-      		<br>
+          <%= f.label :skills_ispublic, class: "checkbox inline" do  %>
+            <br>
+            <%= f.check_box :skills_ispublic %>
+            <span>Make this section public: </span>
+          <% end %>
+          <br>
 
       		<%= f.submit yield(:button_text), class: "btn btn" %>
 
@@ -83,7 +90,10 @@
     	 		<font color= "#666666"><b><i>Education </b></i></font><br><%= simple_format(@user.education) %><br><br>
     	 	<% end %>
     	 	<% if @user.skills_ispublic %>
-    	 		<font color= "#666666"><b><i>Skills </b></i></font><br><%= simple_format(@user.skills) %>
+    	 		<font color= "#666666"><b><i>Skills </b></i></font><br>
+          <% for tskill in @user.tskills %>
+              <span class="boxed"><%= tskill.name %></span>
+          <%end %>
     	 	<% end %>
       
 	<% end %>

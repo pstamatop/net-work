@@ -4,6 +4,9 @@ class User < ApplicationRecord
   	has_many :comments, dependent: :destroy
 	has_many :friend_requests, source: 'receiver_id'
 
+	has_and_belongs_to_many :tskills
+
+
 	before_save { self.email = email.downcase }
 	validates :firstName, presence: true, length: { maximum: 50 }
 	validates :lastName, presence: true, length: { maximum: 50 }

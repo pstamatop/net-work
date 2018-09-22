@@ -290,3 +290,11 @@ span.picture {
 .notifications {
   font-weight: bolder;
 }
+
+.boxed {
+  display: inline-block;
+  padding : 5px;
+  border-radius: 20px / 20px;
+  border: 2px solid #666666;
+  background-color: #e5e5e5;
+}
