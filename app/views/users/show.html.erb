@@ -79,19 +79,24 @@
 
 		<% end %>
 	<% else %>
-		<% if @user.curwork_ispublic %>
+    <% display_flag = false %>
+    <% if logged_in? && @user.friends_with?(current_user) %>
+        <% display_flag = true %>
+    <% end %> 
+
+		<% if @user.curwork_ispublic ||  display_flag %>
     	  <font size= "5"><b><br><%=@user.curwork%></b></font>
   		<% end %>
     		<br><br>
-    	 	<% if @user.prevwork_ispublic %>
-    	 		<font color= "#666666"><b><i>Previous Working Experience </b></i></font><br><%= simple_format(@user.prevwork) %><br><br>
+    	 	<% if @user.prevwork_ispublic || display_flag %>
+    	 		<font color= "#666666"><b><i>Working Experience </b></i></font><br><%= simple_format(@user.prevwork) %><br><br>
     	 	<% end %>
-    	 	<% if @user.education_ispublic %>
+    	 	<% if @user.education_ispublic || display_flag %>
     	 		<font color= "#666666"><b><i>Education </b></i></font><br><%= simple_format(@user.education) %><br><br>
     	 	<% end %>
-    	 	<% if @user.skills_ispublic %>
+    	 	<% if @user.skills_ispublic  || display_flag %>
     	 		<font color= "#666666"><b><i>Skills </b></i></font><br>
-          <% for tskill in @user.tskills %>
+          <% for tskill in @user.tskills || display_flag  %>
               <span class="boxed"><%= tskill.name %></span>
           <%end %>
     	 	<% end %>
