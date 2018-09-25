@@ -28,7 +28,20 @@ class User < ApplicationRecord
 	end
 
 	def feed
-    	Post.where("user_id = ?", id)
+		#liked_posts = Post.where("id IN (?)",(friends.find {|f| f.likes.find {|l| l.post_id}}))
+		liked_posts = []
+
+		if friends.any?
+          friends.each do |friend|
+          	if friend.likes.any?
+          		friend.likes.each do |like|
+          			liked_posts.push(like.post_id)
+          		end
+          	end
+          end
+        end
+    	#Post.where("user_id = ?", id)
+    	Post.where("user_id IN (?) OR user_id = ? OR id IN (?)", friends.ids, id, liked_posts)
   	end
 
   	def friends

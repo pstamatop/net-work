@@ -7,4 +7,21 @@
 <br><br>
 <%= [current_user.firstName, current_user.lastName].join(' ') %></h1>
 <span><%= link_to "View my profile", current_user %></span>
-<span><%= pluralize(current_user.posts.count, "post") %></span>
+<div class="stats">
+<a href="<%= user_posts_path(current_user) %>"><%= pluralize(current_user.posts.count, "post") %></a>
+<a><%= pluralize(current_user.friends.count, "friend")%></a>
+<br>
+<% if current_user.friends.any? %>
+        <div class="user_avatars">
+          <% current_user.friends.each do |user| %>
+          <div class="favatar">
+            <% if user.profilepic.present? %>
+				<%= image_tag(user.profilepic.url,  size: 30) %>
+			<% else %>
+				<%= image_tag("default-avatar.png", size: 30)  %>
+			<% end %>
+		</div>
+          <% end %>
+        </div>
+      <% end %>
+</div>
