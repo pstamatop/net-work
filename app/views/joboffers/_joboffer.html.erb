@@ -6,10 +6,13 @@
 	<div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 50), @user %></div>
   <% end %>
   <span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
-  <br><span><b><%= joboffer.title %></b></span><br>
+  <br><font size= "4"<span><b><%= joboffer.title %></b></font></span>
   <span class="content">
   	<%= joboffer.description %>
   </span>
+  <font color= "#666666"><i><b> Required skills :</i></b></font>
+  <%= joboffer.tskills.map(&:name).join(', ') %>
+  <br>
   <span class="timestamp">
     Posted <%= time_ago_in_words(joboffer.created_at) %> ago.
     <% if current_user?(@user) %>
@@ -17,16 +20,16 @@
                                        data: { confirm: "Are you sure you want to delete this job offer?" } %>
     <% end %>
   </span>
-  <% pre_apply = joboffer.applies.find { |apply| apply.user_id == current_user.id} %>
-  <% if pre_apply %>
-    <%= link_to 'Cancel your apply', joboffer_apply_path(joboffer, pre_apply), method: :delete %>
-  <% else %>
-  <%= link_to "Apply for this job", joboffer_applies_path(joboffer), method: :create %>
-  <% end %>
-  <br>
   <% if joboffer.applies.count == 1%>
     <%= link_to "One person", joboffer_applies_path(joboffer)%> has applied for this job.
   <% else %>
     <%= link_to [joboffer.applies.count, 'people'].join(' '), joboffer_applies_path(joboffer)%> have applied for this job.
+  <% end %>
+  <br>
+   <% pre_apply = joboffer.applies.find { |apply| apply.user_id == current_user.id} %>
+  <% if pre_apply %>
+    <%= link_to 'Cancel your request', joboffer_apply_path(joboffer, pre_apply), method: :delete %>
+  <% else %>
+  <%= link_to "Apply for this job", joboffer_applies_path(joboffer), method: :create %>
   <% end %>
 </li>

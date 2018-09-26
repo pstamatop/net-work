@@ -4,12 +4,19 @@
   <div class="row">
     <aside class="col-md-4">
       <section class="post_form">
-      	<b>Make a new job offer: </b><br><br>
+      	<h3>Make a new job offer: </h3>
         <%= render 'shared/joboffer_form' %>
       </section>
+      <br>
+      <h3>Feedback for your offers:</h3>
+      <% for apply in current_user.get_applies %>
+      	<% @user = User.find(apply.user_id) %>
+      	<% @joboffer = Joboffer.find(apply.joboffer_id) %>
+      	<li><%= link_to [@user.firstName, @user.lastName].join(' '), @user %> has applied for job: <b><%= @joboffer.title %></b></li>
+      <%end%>
     </aside>
     <div class="col-md-8">
-      <h3> Find the best job offer for you!  </h3>
+      <h3> Find the job that suits you! </h3>
       <%= render 'shared/jobofferfeed' %>
     </div>
 </div>

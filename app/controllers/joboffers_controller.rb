@@ -29,7 +29,7 @@ class JoboffersController < ApplicationController
   private
 
     def joboffer_params
-      params.require(:joboffer).permit(:title,:description)
+      params.require(:joboffer).permit(:title,:description,{tskill_ids: []})
     end
 
     def correct_user

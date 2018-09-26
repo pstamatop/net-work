@@ -52,6 +52,21 @@ class User < ApplicationRecord
     	Joboffer.where("user_id IN (?) OR user_id = ?", friends.ids, id)
   	end
 
+  	def get_applies
+  		total_applies = []
+
+		if joboffers.any?
+  			joboffers.each do |joffer|
+  				if joffer.applies.any?
+          			joffer.applies.each do |apply|
+          				total_applies.push(apply)
+          			end
+          		end
+          	end
+        total_applies.sort_by(&:created_at).reverse
+  		end
+  	end
+
   	def friends
 		ids = FriendRequest.where('request_receiver = ? OR request_sender = ?', id, id)
 			.where(status: :accepted).pluck(:request_receiver, :request_sender)

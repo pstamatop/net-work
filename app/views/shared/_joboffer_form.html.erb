@@ -4,5 +4,14 @@
   <div class="field">
     <%= f.text_area :description,class: 'form-control', placeholder: "Give a description..." %>
   </div>
+  <br>
+    <%= f.label :"Choose the skills required for this job:"%>
+    <br><br>
+    <% for tskill in Tskill.all %>
+      <div class= "checkbox inline">
+        <%= check_box_tag "joboffer[tskill_ids][]", tskill.id, @joboffer.tskills.include?(tskill) %>
+           <span><%= tskill.name %></span>
+        </div>
+      <% end %>
   <%= f.submit "Submit", class: "btn btn" %>
 <% end %>
