@@ -26,10 +26,12 @@
     <%= link_to [joboffer.applies.count, 'people'].join(' '), joboffer_applies_path(joboffer)%> have applied for this job.
   <% end %>
   <br>
+  <% if joboffer.user_id != current_user.id %>
    <% pre_apply = joboffer.applies.find { |apply| apply.user_id == current_user.id} %>
   <% if pre_apply %>
     <%= link_to 'Cancel your request', joboffer_apply_path(joboffer, pre_apply), method: :delete %>
   <% else %>
   <%= link_to "Apply for this job", joboffer_applies_path(joboffer), method: :create %>
+  <% end %>
   <% end %>
 </li>

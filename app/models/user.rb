@@ -49,7 +49,7 @@ class User < ApplicationRecord
   	def jobofferfeed
 		#liked_posts = Post.where("id IN (?)",(friends.find {|f| f.likes.find {|l| l.post_id}}))
     	#Post.where("user_id = ?", id)
-    	Joboffer.where("user_id IN (?) OR user_id = ?", friends.ids, id)
+    	Joboffer.where("user_id IN (?)", friends.ids)
   	end
 
   	def get_applies

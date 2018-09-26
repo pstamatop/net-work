@@ -1,0 +1,31 @@
+<% provide(:title, "Job Offer") %>
+<h1>Check your job offer</h1>
+<div class="posts">
+  <% @user = User.find(@joboffer.user_id) %>
+  <% if @user.profilepic.present? %>
+    <div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 50), @user %></div>
+  <% else %>
+  <div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 50), @user %></div>
+  <% end %>
+  <span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+  <br><font size= "4"<span><b><%= @joboffer.title %></b></font></span>
+  <span class="content">
+    <%= @joboffer.description %>
+  </span>
+  <font color= "#666666"><i><b> Required skills :</i></b></font>
+  <%= @joboffer.tskills.map(&:name).join(', ') %>
+  <br>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(@joboffer.created_at) %> ago.
+    <% if current_user?(@user) %>
+      <%= link_to "delete", @joboffer, method: :delete,
+                                       data: { confirm: "Are you sure you want to delete this job offer?" } %>
+    <% end %>
+  </span>
+  <br>
+  <% if @joboffer.applies.count == 1%>
+    <%= link_to "One person", joboffer_applies_path(@joboffer)%> has applied for this job.
+  <% else %>
+    <%= link_to [@joboffer.applies.count, 'people'].join(' '), joboffer_applies_path(@joboffer)%> have applied for this job.
+  <% end %>
+</ldiv>

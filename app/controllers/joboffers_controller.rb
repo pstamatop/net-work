@@ -25,6 +25,10 @@ class JoboffersController < ApplicationController
     @joboffers = current_user.jobofferfeed.paginate(page: params[:page])
   end
 
+  def show
+  	@joboffer = Joboffer.find(params[:id])
+  end
+
 
   private
 

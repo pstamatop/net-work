@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     	resources :friend_requests
   	end
 	resources :friendships
-	resources :joboffers, only: [:create, :destroy, :index]
+	resources :joboffers, only: [:create, :destroy, :index, :show]
 
 	resources :joboffers do
 		resources :applies, only: [:create, :destroy, :index]
