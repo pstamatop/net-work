@@ -9,8 +9,8 @@
 	<li>
 		<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
 		<span>|</span>
-		<span><%= link_to "Accept", "#" %></span>
-		<span><%= link_to "Decline", "#" %></span>
+		<span><%= link_to "Accept", accept_path(@user), method: :get%></span>
+		<span><%= link_to "Decline", decline_path(@user), method: :delete%></span>
 	</li>
 <% end %>
 </ul>

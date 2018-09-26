@@ -1,20 +1,26 @@
 <h1>net-work</h1>
 
-<% if @friends %>
-	<h2>friends:</h2>
-
+<% if current_user.friends.any? %>
+	<h2>Friends</h2>
 	<ul>
-	<% @friends&.each do |user| %>
-		<li><%= user.firstName %></li>
-	<% end %>
+		<% current_user.friends&.each do |f| %>
+			<% @id = f.id %> 
+			<% @user = User.find(@id) %>
+			<li>
+				<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+			</li>
+		<% end %>
 	</ul>
 <% end %>
 
 
-<h2>pending requests from users:</h2>
+<!-- TODO fix requests -->
+<% if current_user.pending_requests.any? %> 
 
-<ul>
-<% @users_with_pending_requests&.each do |user| %>
-	<li><%= user.firstName %></li>
+	<h2>Pending Requests</h2>
+	<ul>
+	<% @users_with_pending_requests&.each do |user| %>
+		<li><%= user.firstName %></li>
+	<% end %>
+	</ul>
 <% end %>
-</ul>

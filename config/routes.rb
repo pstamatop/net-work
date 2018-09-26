@@ -23,8 +23,13 @@ Rails.application.routes.draw do
 	resources :users do
     	resources :friend_requests
   	end
-	resources :friendships
-	resources :joboffers, only: [:create, :destroy, :index, :show]
+	resources :users do
+    	resources :friendships
+  	end	
+  	get '/accept_request/:id', to: 'friend_requests#accept_request', as:'accept'
+  	delete '/decline_request/:id',to: 'friend_requests#decline_request', as:'decline'
+
+  	resources :joboffers, only: [:create, :destroy, :index, :show]
 
 	resources :joboffers do
 		resources :applies, only: [:create, :destroy, :index]
