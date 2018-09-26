@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180922151515) do
+ActiveRecord::Schema.define(version: 20180925212920) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 20180922151515) do
     t.index ["request_receiver"], name: "index_friend_requests_on_request_receiver"
     t.index ["request_sender", "request_receiver"], name: "index_friend_requests_on_request_sender_and_request_receiver", unique: true
     t.index ["request_sender"], name: "index_friend_requests_on_request_sender"
+  end
+
+  create_table "joboffers", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "created_at"], name: "index_joboffers_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_joboffers_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|

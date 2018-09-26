@@ -1,0 +1,7 @@
+<% if @joboffers.any? %>
+  <ol class="posts">
+    <%= render @joboffers %>
+  </ol>
+  <%= will_paginate @joboffers %>
+<% end %>
+

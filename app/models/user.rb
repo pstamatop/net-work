@@ -3,6 +3,7 @@ class User < ApplicationRecord
   	has_many :likes, dependent: :destroy
   	has_many :comments, dependent: :destroy
 	has_many :friend_requests, source: 'receiver_id'
+	has_many :joboffers, dependent: :destroy
 
 	has_and_belongs_to_many :tskills
 
@@ -42,6 +43,12 @@ class User < ApplicationRecord
         end
     	#Post.where("user_id = ?", id)
     	Post.where("user_id IN (?) OR user_id = ? OR id IN (?)", friends.ids, id, liked_posts)
+  	end
+
+  	def jobofferfeed
+		#liked_posts = Post.where("id IN (?)",(friends.find {|f| f.likes.find {|l| l.post_id}}))
+    	#Post.where("user_id = ?", id)
+    	Joboffer.where("user_id IN (?) OR user_id = ?", friends.ids, id)
   	end
 
   	def friends

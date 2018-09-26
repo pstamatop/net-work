@@ -9,7 +9,7 @@
                     <li><%= link_to "Users", users_path %></li>
           <% end %>
           <li><%= link_to "My Net-work", '#' %></li>
-          <li><%= link_to "Job Offers", '#' %></li>
+          <li class="<%= 'active' if current_page?(joboffers_path) %>"><%=link_to "Job Offers", joboffers_path%></li>
           <li><%= link_to "Messages", '#' %></li>
           <% if current_user.pending_requests.any? %>
             <li class="notifications">
