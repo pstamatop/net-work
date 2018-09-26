@@ -25,5 +25,9 @@ Rails.application.routes.draw do
   	end
 	resources :friendships
 	resources :joboffers, only: [:create, :destroy, :index]
+
+	resources :joboffers do
+		resources :applies, only: [:create, :destroy, :index]
+	end
 	# TODO check routes
 end

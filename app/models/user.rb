@@ -4,6 +4,7 @@ class User < ApplicationRecord
   	has_many :comments, dependent: :destroy
 	has_many :friend_requests, source: 'receiver_id'
 	has_many :joboffers, dependent: :destroy
+	has_many :applies, dependent: :destroy
 
 	has_and_belongs_to_many :tskills
 

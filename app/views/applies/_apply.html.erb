@@ -1,0 +1,9 @@
+<li>
+  <% @user = User.find(apply.user_id) %>
+  <% if @user.profilepic.present? %>
+  	<div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 50), @user %></div>
+  <% else %>
+	   <div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 50), @user %></div>
+  <% end %>
+  <span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+</li>

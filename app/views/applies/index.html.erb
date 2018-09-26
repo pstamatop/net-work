@@ -1,0 +1,11 @@
+<% provide(:title, 'Applies') %>
+<h1>Users who applied for this job</h1>
+<h>Total number of applies: <%= @joboffer.applies.count %></h3>
+
+<% if @joboffer.applies.any? %>
+      <ol class="users">
+        <%= render @applies%>
+      </ol>
+      <%= will_paginate @applies %>
+    <% end %>
+
