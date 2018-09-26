@@ -8,11 +8,22 @@
         <%= render 'shared/joboffer_form' %>
       </section>
       <br>
+      <h3>Check your previous job offers:</h3>
+      <% if current_user.joboffers.any? %>
+  		<% current_user.joboffers.each do |joffer| %>
+  		<% if joffer.id == nil %>
+  			<% next %>
+  		<% end %>
+  		<% @joboffer = Joboffer.find(joffer.id) %>
+      	<li><b><%= link_to @joboffer.title, @joboffer%></b></li>
+      <%end%>
+      <%end%>
+      <br>
       <h3>Feedback for your offers:</h3>
       <% for apply in current_user.get_applies %>
       	<% @user = User.find(apply.user_id) %>
       	<% @joboffer = Joboffer.find(apply.joboffer_id) %>
-      	<li><%= link_to [@user.firstName, @user.lastName].join(' '), @user %> has applied for job: <b><%= link_to @joboffer.title, @joboffer%></b></li>
+      	<li><%= link_to [@user.firstName, @user.lastName].join(' '), @user %> has applied for job: <%= link_to @joboffer.title, @joboffer%></li>
       <%end%>
     </aside>
     <div class="col-md-8">
