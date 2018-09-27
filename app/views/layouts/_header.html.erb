@@ -8,7 +8,7 @@
           <% if current_user.admin? %> 
                     <li><%= link_to "Users", users_path %></li>
           <% end %>
-          <li><%= link_to "My Net-work", user_friendships_path(@current_user) %></li>
+          <li class="<%= 'active' if current_page?(user_friendships_path(@current_user)) %>"><%= link_to "My Net-work", user_friendships_path(@current_user) %></li>
           <li class="<%= 'active' if current_page?(joboffers_path) %>"><%=link_to "Job Offers", joboffers_path%></li>
           <li><%= link_to "Messages", '#' %></li>
           <% if current_user.pending_requests.any? %>

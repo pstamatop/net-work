@@ -9,5 +9,5 @@
 <span><%= link_to "View my profile", current_user %></span>
 <div class="stats">
 <a href="<%= user_posts_path(current_user) %>"><%= pluralize(current_user.posts.count, "post") %></a>
-<a><%= pluralize(current_user.friends.count, "friend")%></a>
+<a href="<%= user_friendships_path(current_user) %>"><%= pluralize(current_user.friends.count, "friend")%></a>
 </div>

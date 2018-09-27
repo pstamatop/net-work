@@ -19,6 +19,7 @@ gem 'mini_magick', '~> 4.3'
 gem 'carrierwave-video'
 gem 'rmagick'
 gem 'carrierwave-audio'
+gem 'knn', git: 'git://github.com/jonmidhir/ruby-knn.git'
 
 
 

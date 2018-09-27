@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/jonmidhir/ruby-knn.git
+  revision: ccfdd1e5a850db287b8081b53a6be23f4511a7fb
+  specs:
+    knn (1.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -242,6 +248,7 @@ DEPENDENCIES
   guard-minitest (= 2.4.4)
   jbuilder (= 2.7.0)
   jquery-rails (= 4.3.1)
+  knn!
   listen (= 3.1.5)
   mini_magick (~> 4.3)
   minitest (= 5.10.3)

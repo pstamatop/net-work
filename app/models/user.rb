@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+	require 'knn'
+
   	has_many :posts, dependent: :destroy
   	has_many :likes, dependent: :destroy
   	has_many :comments, dependent: :destroy
@@ -47,6 +50,83 @@ class User < ApplicationRecord
   	end
 
   	def jobofferfeed
+  		# KNN
+  		# remove my job offers from test set
+  		test_joboffers = []
+  		for jo in Joboffer.all
+  			if jo.user_id != id
+				test_joboffers.push(jo)
+			end
+  		end
+
+  		if test_joboffers.length > 50
+  			# keep only 50 job offers, delete firrst n elements
+  			n =  test_joboffers.length-50
+  			test_joboffers.drop(n)
+
+  		end
+
+  		vectors = []
+  		users_checked = []
+  		# implement current_user  as vector
+  		curuser_tupple = []
+  		for offer in test_joboffers
+  			instance_variable_set("@uservector_#{id}",[])
+  			if applies.find_by(:joboffer_id => offer.id)
+  				# push value 1 if user has applied for this job
+  				instance_variable_get("@uservector_#{id}").push(1)
+  			else
+  				instance_variable_get("@uservector_#{id}").push(0)
+  			end
+  		end
+  		curuser_tupple = Knn::Vector.new(instance_variable_get("@uservector_#{id}"),id)
+  		vectors.push(curuser_tupple)
+  		users_checked.push(id)
+  		# implement his friends' friends as vectors
+  		
+  		for check_friend in friends
+  			for user in check_friend.friends
+  				user_tupple = []
+  				if friends.include? user
+  					# continue if friend is mutual
+  					next
+  				end
+  				# continue if user has been already checked
+  				if users_checked.include? user.id
+  					next
+  				end
+  				instance_variable_set("@uservector_#{user.id}",[])
+  				# first element of each vector is user's id
+  				#instance_variable_get("@uservector_#{user.id}").push(user.id)
+  				for offer in test_joboffers
+  					if user.applies.find_by(:joboffer_id => offer.id)
+  						# push value 1 if user has applied for this job
+  						instance_variable_get("@uservector_#{user.id}").push(1)
+  					else
+  						instance_variable_get("@uservector_#{user.id}").push(0)
+  					end
+  				end
+  				vectors.push(Knn::Vector.new(instance_variable_get("@uservector_#{user.id}"),user.id))
+  				users_checked.push(user.id)
+  			end
+  		end
+
+  		classifier = Knn::Classifier.new(vectors, 9)
+
+		classifier.classify(curuser_tupple)
+  		get_from_knn = classifier.nearest_neighbours_to(curuser_tupple)
+
+  		extra_via_knn = []
+  		for item in get_from_knn
+  			@user = User.find(item.label)
+  			# get the job offers that this user has applied
+  			for apply in @user.applies
+  				@joboffer = Joboffer.find(apply.joboffer_id)
+  				if @joboffer.user_id != id
+  					extra_via_knn.push(@joboffer)
+  				end
+  			end
+  		end
 
 		extra_via_skills = []
 		common = 0
@@ -60,10 +140,12 @@ class User < ApplicationRecord
 				if joffer.user_id != id
 					extra_via_skills.push(joffer)
 				end
-			end	
+			end
+			common = 0	
 		end
 
-    	Joboffer.where("user_id IN (?) OR id IN (?)", friends.ids, extra_via_skills)
+		
+    	Joboffer.where("user_id IN (?) OR id IN (?) OR id IN (?)", friends.ids, extra_via_skills, extra_via_knn)
   	end
 
   	def get_applies

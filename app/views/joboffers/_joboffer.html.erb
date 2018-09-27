@@ -1,5 +1,8 @@
 <li>
   <% @user = User.find(joboffer.user_id) %>
+ <%if not current_user.friends.include? @user %>
+    <font size= "2"><span><i> We thought that this would interest you </i></span></font><br>
+  <% end %>
   <% if @user.profilepic.present? %>
   	<div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 50), @user %></div>
   <% else %>
