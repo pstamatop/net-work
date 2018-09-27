@@ -47,9 +47,23 @@ class User < ApplicationRecord
   	end
 
   	def jobofferfeed
-		#liked_posts = Post.where("id IN (?)",(friends.find {|f| f.likes.find {|l| l.post_id}}))
-    	#Post.where("user_id = ?", id)
-    	Joboffer.where("user_id IN (?)", friends.ids)
+
+		extra_via_skills = []
+		common = 0
+		for joffer in Joboffer.all
+			for jo_skill in joffer.tskills
+				if tskills.include? jo_skill
+					common = common + 1;
+				end
+			end
+			if (common/joffer.tskills.count) >= 0.7
+				if joffer.user_id != id
+					extra_via_skills.push(joffer)
+				end
+			end	
+		end
+
+    	Joboffer.where("user_id IN (?) OR id IN (?)", friends.ids, extra_via_skills)
   	end
 
   	def get_applies
