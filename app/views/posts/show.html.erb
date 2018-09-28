@@ -1,0 +1,59 @@
+<% provide(:title, "Post") %>
+<h2>Check your post</h2>
+<div class="posts">
+  <% @user = User.find(@post.user_id) %>
+  <% if @user.profilepic.present? %>
+    <div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 50), @user %></div>
+  <% else %>
+  <div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 50), @user %></div>
+  <% end %>
+  <span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+  <span class="content">
+    <%= @post.content %>
+    <br>
+    <% if @post.attachment? %>
+      <% @post.attachment.each do |item| %>
+        <%= image_tag item.url %>
+    <% end %>
+    <% end %>
+    <% if @post.video_attachment? %>
+      <%= video_tag @post.video_attachment_url, :size => "500x500", :controls =>true %>
+    <%end%>
+     <% if @post.audio_attachment? %>
+      <%= audio_tag @post.audio_attachment_url, :controls =>true %>
+    <%end%>
+    </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(@post.created_at) %> ago.
+    <% if current_user?(@post.user) %>
+      <%= link_to "delete", @post, method: :delete,
+                                       data: { confirm: "Are you sure you want to delete this post?" } %>
+    <% end %>
+  </span>
+  <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
+  <% if pre_like %>
+    <%= link_to 'Unlike', post_like_path(@post, pre_like), method: :delete %>
+  <% else %>
+  <%= link_to "Like", post_likes_path(@post), method: :create %>
+  <% end %>
+  <br>
+  <% if @post.likes.count == 1%>
+    <%= link_to "1 Like", post_likes_path(@post)%>
+  <% else %>
+    <%= link_to [@post.likes.count, 'Likes'].join(' '), post_likes_path(@post)%>
+  <% end %>
+  &nbsp&nbsp
+  <% if @post.comments.count == 1%>
+    <%= link_to "1 Comment", post_comments_path(@post)%>
+  <% else %>
+    <%= link_to [@post.comments.count, 'Comments'].join(' '), post_comments_path(@post)%>
+  <% end %>
+  <%= form_for([@post,@post.comments.build]) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="field">
+     <%= f.text_area :content, placeholder: "Write a comment..." %>
+    </div>
+    <%= f.submit "Submit comment", class: "btn btn-sm" %>
+  <% end %>
+  <br>
+</div>

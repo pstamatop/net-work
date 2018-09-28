@@ -25,6 +25,10 @@ class PostsController < ApplicationController
     @posts = @user.posts.paginate(page: params[:page])
   end
 
+  def show
+    @post = Post.find(params[:id])
+  end
+
 
   private
 

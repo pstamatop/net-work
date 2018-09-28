@@ -164,6 +164,41 @@ class User < ApplicationRecord
   		end
   	end
 
+    def like_notifications
+    total_like_interact = []
+    if posts.any?
+        posts.each do |post|
+          if post.likes.any?
+            post.likes.each do |like|
+                if like.user_id != id
+                  total_like_interact.push(like.id)
+                end
+            end
+          end
+        end
+    end
+    Like.where("id IN (?)", total_like_interact).order('updated_at DESC')
+  end
+
+  def comment_notifications
+    total_com_interact = []
+    if posts.any?
+        posts.each do |post|
+        if post.comments.any?
+            post.comments.each do |comment|
+                if comment.user_id != id
+                  total_com_interact.push(comment.id)
+                end
+            end
+        end
+      end
+    end
+    Comment.where("id IN (?)", total_com_interact).order('updated_at DESC')
+  end
+
+
+
+
   	def friends
 		ids = FriendRequest.where('request_receiver = ? OR request_sender = ?', id, id)
 			.where(status: :accepted).pluck(:request_receiver, :request_sender)
@@ -235,4 +270,5 @@ class User < ApplicationRecord
 	def self.search(search)
 		where("firstName LIKE ? OR lastName LIKE ? or email LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%") 
 	end
+
 end

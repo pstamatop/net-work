@@ -1,6 +1,6 @@
 <h1>Notifications</h1>
 
-
+<%empty = 1%>
 <% if current_user.pending_requests.any? %> 
 	<h2>Pending Friend Requests</h2>
 	<ul class="users" style="list-style-type:none">
@@ -22,7 +22,36 @@
 	    </li>
 	<% end %>
 	</ul>
+	<% empty = 0 %>
+<%end%>
 
-<% else %>
+<% if current_user.like_notifications.any? %> 
+<h2> Likes </h2>
+	<ul>
+	<% current_user.like_notifications.each do |like| %>
+		<% @user = User.find(like.user_id) %>
+		<% @post = Post.find(like.post_id) %>
+		<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span> liked your <%= link_to "post",post_path(@post.id)%>.
+		<br>
+	<% end %>
+	</ul>
+	<% empty = 0 %>
+<% end %>
+
+<% if current_user.comment_notifications.any? %> 
+<h2> Comments </h2>
+	<ul>
+	<% current_user.comment_notifications.each do |comment| %>
+		<% @user = User.find(comment.user_id) %>
+		<% @post = Post.find(comment.post_id) %>
+			<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span> commented on your <%= link_to "post",post_path(@post.id)%>.
+			<br>
+	<% end %>
+	</ul>
+	<% empty = 0 %>
+<% end %>
+
+<% if empty == 1 %>
 	<h2> You have no new notifications </h2>
 <% end %>
+
