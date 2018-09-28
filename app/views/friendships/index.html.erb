@@ -2,25 +2,65 @@
 
 <% if current_user.friends.any? %>
 	<h2>Friends</h2>
-	<ul>
+	<ul class="users" style="list-style-type:none">
 		<% current_user.friends&.each do |f| %>
 			<% @id = f.id %> 
 			<% @user = User.find(@id) %>
 			<li>
-				<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+				<% if @user.profilepic.present? %>
+  					<div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 30), @user %></div>
+ 				 <% else %>
+	   				<div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 30), @user %></div>
+ 				 <% end %>
+ 				 <br>
+			     <span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+			     <br>
 			</li>
 		<% end %>
 	</ul>
 <% end %>
 
 
-<!-- TODO fix requests -->
 <% if current_user.pending_requests.any? %> 
+	<h2>Pending Friend Requests</h2>
+	<ul class="users" style="list-style-type:none">
+	<% current_user.pending_requests&.each do |request| %>
+		<% @id = request.request_sender %> 
+		<% @user = User.find(@id) %>
+		<li>
+			<% if @user.profilepic.present? %>
+  				<div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 30), @user %></div>
+ 			<% else %>
+	   			<div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 30), @user %></div>
+ 			 <% end %>
+ 			 <br>
+			<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+			<span>|</span>
+			<span><%= link_to "Accept", accept_path(@user), method: :get%></span>
+			<span><%= link_to "Decline", decline_path(@user), method: :delete%></span>
+	        <br>
+		</li>
+	<% end %>
+	</ul>
+<% end %>
 
-	<h2>Pending Requests</h2>
-	<ul>
-	<% @users_with_pending_requests&.each do |user| %>
-		<li><%= user.firstName %></li>
+
+<% if current_user.sent_requests.any? %> 
+	<h2>Sent Friend Requests</h2>
+	<ul class="users" style="list-style-type:none">
+	<% current_user.sent_requests&.each do |request| %>
+		<% @id = request.request_receiver %> 
+		<% @user = User.find(@id) %>
+		<li>
+			<% if @user.profilepic.present? %>
+  				<div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 30), @user %></div>
+ 			<% else %>
+	   			<div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 30), @user %></div>
+ 			 <% end %>
+ 			 <br>
+			<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+			<br>
+		</li>
 	<% end %>
 	</ul>
 <% end %>

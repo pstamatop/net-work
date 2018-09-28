@@ -175,22 +175,63 @@ class User < ApplicationRecord
 					 	.where(status: :pending)
 	end
 
+	def sent_requests
+		FriendRequest.where('request_sender = ? ', id)
+					 	.where(status: :pending)
+	end
+
 	def get_user_from_pending_requests
 		User.find(pending_requests.pluck(:request_sender))
 	end
 
 	def request_friendship(other_user)
-		FriendRequest.create request_sender: id,
+		if already_rejected?(other_user)
+			FriendRequest.where(request_sender: id, request_receiver: other_user.id).where(status: :rejected).update status: :pending
+		elsif already_rejected_by?(other_user)
+			FriendRequest.where(request_sender: other_user.id, request_receiver: id).where(status: :rejected).update status: :pending
+		elsif !friends_with?(other_user) 
+			FriendRequest.create request_sender: id,
 								request_receiver: other_user.id,
 								status: :pending
+		end
 	end
 
 	def accept_friend_request(other_user)
-		FriendRequest.where(request_sender: other_user.id).update status: :accepted
+		FriendRequest.where(request_sender: other_user.id, request_receiver: id).update status: :accepted
+	end
+
+	def delete_friend_request(other_user)
+		FriendRequest.where(request_sender: other_user.id, request_receiver: id).update status: :rejected
+	end
+
+	def delete_sent_friend_request(other_user)
+		FriendRequest.where(request_sender: id, request_receiver: other_user.id).update status: :rejected
+
 	end
 
 	def friends_with?(other_user)
 		(FriendRequest.where(request_sender: id, request_receiver: other_user.id).where(status: :accepted).any? ||
 		FriendRequest.where(request_sender: other_user.id, request_receiver: id).where(status: :accepted).any?)
+	end
+
+	def already_rejected_by?(other_user)
+		FriendRequest.where(request_sender: other_user.id, request_receiver: id).where(status: :rejected).any?
+	end
+
+	def already_rejected?(other_user)
+		FriendRequest.where(request_sender: id, request_receiver: other_user.id).where(status: :rejected).any?
+	end
+
+
+	def pending_from?(other_user)
+		FriendRequest.where(request_sender: other_user.id, request_receiver: id).where(status: :pending).any?
+	end
+
+	def pending_to?(other_user)
+		FriendRequest.where(request_sender: id, request_receiver: other_user.id).where(status: :pending).any?
+	end
+
+	def self.search(search)
+		where("firstName LIKE ? OR lastName LIKE ? or email LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%") 
 	end
 end

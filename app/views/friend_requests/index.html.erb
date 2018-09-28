@@ -1,16 +1,28 @@
 <h1>Notifications</h1>
 
-<h2>Pending Friend Requests</h2>
 
-<ul>
-<% current_user.pending_requests&.each do |request| %>
-	<% @id = request.request_sender %> 
-	<% @user = User.find(@id) %>
-	<li>
-		<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
-		<span>|</span>
-		<span><%= link_to "Accept", accept_path(@user), method: :get%></span>
-		<span><%= link_to "Decline", decline_path(@user), method: :delete%></span>
-	</li>
+<% if current_user.pending_requests.any? %> 
+	<h2>Pending Friend Requests</h2>
+	<ul class="users" style="list-style-type:none">
+	<% current_user.pending_requests&.each do |request| %>
+		<% @id = request.request_sender %> 
+		<% @user = User.find(@id) %>
+		<li>
+			<% if @user.profilepic.present? %>
+  				<div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 30), @user %></div>
+ 			<% else %>
+	   			<div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 30), @user %></div>
+ 			 <% end %>
+ 			 <br>
+			<span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+			<span>|</span>
+			<span><%= link_to "Accept", accept_path(@user), method: :get%></span>
+			<span><%= link_to "Decline", decline_path(@user), method: :delete%></span>
+	        <br>
+	    </li>
+	<% end %>
+	</ul>
+
+<% else %>
+	<h2> You have no new notifications </h2>
 <% end %>
-</ul>

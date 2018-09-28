@@ -17,6 +17,18 @@
     <% if logged_in? && @user.friends_with?(current_user) %>
     	<%= link_to "Posts", user_posts_path(@user), class: "btn btn-lg btn-default" %>
     <% end %>
+
+    <% if logged_in? && !@user.friends_with?(current_user) && @user != current_user && !current_user.pending_from?(@user) && !current_user.pending_to?(@user) %>
+      <%= link_to "Add Friend", request_path(@user), method: :get, class: "btn btn-lg btn-default" %>
+    <% elsif logged_in? && @user.friends_with?(current_user) %>
+      <%= link_to "Remove Friend", delete_path(@user), method: :delete, class: "btn btn-lg btn-default" %>
+    <% elsif logged_in? && current_user.pending_to?(@user) %>
+      <%= link_to "Remove Friend", delete_sent_path(@user), method: :delete, class: "btn btn-lg btn-default" %>
+    <% elsif logged_in? && current_user.pending_from?(@user) %>
+      <%= link_to "Accept", accept_path(@user), method: :get, class: "btn btn-lg btn-default" %>
+      <%= link_to "Decline", decline_path(@user), method: :delete, class: "btn btn-lg btn-default"%>
+    <% end %>
+
   </aside>
    <div class="col-md-8">
    	<font size= "6"><b><%= [@user.firstName, @user.lastName].join(' ') %></b></font>

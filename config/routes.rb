@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   	end	
   	get '/accept_request/:id', to: 'friend_requests#accept_request', as:'accept'
   	delete '/decline_request/:id',to: 'friend_requests#decline_request', as:'decline'
+  	get '/request_friendship/:id', to: 'friend_requests#request_friendship', as:'request'
+  	delete '/delete_friendship/:id',to: 'friend_requests#delete_friendship', as:'delete'
+  	delete '/delete_sent_friendship/:id',to: 'friend_requests#delete_request', as:'delete_sent'
 
   	resources :joboffers, only: [:create, :destroy, :index, :show]
 
