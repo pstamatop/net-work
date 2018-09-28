@@ -28,6 +28,11 @@
       <%= link_to "Accept", accept_path(@user), method: :get, class: "btn btn-lg btn-default" %>
       <%= link_to "Decline", decline_path(@user), method: :delete, class: "btn btn-lg btn-default"%>
     <% end %>
+    <div class="export_single">
+    <% if current_user.admin? %>
+        <%=link_to "Export to XML", export_single_path(@user), method: :get%>
+    <% end %>
+    </div>
 
   </aside>
    <div class="col-md-8">

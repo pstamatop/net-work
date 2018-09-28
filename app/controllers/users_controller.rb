@@ -53,7 +53,13 @@ class UsersController < ApplicationController
 	end
 
 	def export_all
-		current_user.export
+		current_user.export_all
+		redirect_to request.referrer
+	end
+
+	def export
+		@user = User.find(params[:id])
+		current_user.export(@user)
 		redirect_to request.referrer
 	end
 

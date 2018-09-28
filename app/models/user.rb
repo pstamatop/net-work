@@ -274,7 +274,7 @@ class User < ApplicationRecord
 		where("firstName LIKE ? OR lastName LIKE ? or email LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%") 
 	end
 
-	def export
+	def export_all
 		builder = Nokogiri::XML::Builder.new do |xml|
 		xml.Users {
 			User.all.each do |user|
@@ -336,9 +336,75 @@ class User < ApplicationRecord
 			end
 		}
 		end
-		f = File.new('out.xml', 'w')
+		f = File.new('users.xml', 'w')
 		f.write(builder.to_xml)
 		f.close   
-	end 
+	end
+
+	def export(other_user)
+		builder = Nokogiri::XML::Builder.new do |xml|
+		@user = User.find(other_user.id)
+		xml.user {
+			xml.id_ @user.id
+			xml.firstName @user.firstName
+			xml.lastName @user.lastName
+			xml.email @user.email
+			xml.phone @user.phone
+			xml.prevwork @user.prevwork
+			xml.education @user.education
+			xml.skills @user.skills
+			xml.friends {
+				@user.friends.each do |friend|
+					xml.friend {
+						xml.id_ friend.id
+						xml.email friend.email
+
+					}
+				end
+			}
+			xml.posts {
+				@user.posts.each do |post|
+					xml.post {
+						xml.id_ post.id
+						xml.content post.content
+						xml.picture post.attachment
+						xml.video post.video_attachment
+						xml.audio post.audio_attachment
+						xml.lastModified post.updated_at
+					}
+				end
+			}
+			xml.joboffers {
+				@user.joboffers.each do |job|
+					xml.jobOffer {
+						xml.id_ job.id
+						xml.title job.title
+						xml.decription job.description
+					}
+				end
+			}
+			xml.applications {
+				@user.applies.each do |app|
+					xml.application {
+						xml.jobOfferId app.joboffer_id
+					}
+				end
+			}
+			xml.comments {
+				@user.comments.each do |com|
+					xml.comment_ {
+						xml.postId com.post_id
+						xml.content com.content
+					}
+				end
+			}
+		}
+		end
+		filename = "user#{@user.id}.xml"
+		f = File.new(filename, 'w')
+		f.write(builder.to_xml)
+		f.close   
+	end
+ 
 
 end

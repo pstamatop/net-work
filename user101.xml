@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<user>
+  <id>101</id>
+  <firstName>panagiota</firstName>
+  <lastName>stamatopoulou</lastName>
+  <email>pstamatop@gmail.com</email>
+  <phone>98798</phone>
+  <prevwork/>
+  <education/>
+  <skills/>
+  <friends>
+    <friend>
+      <id>22</id>
+      <email>example-21@railstutorial.org</email>
+    </friend>
+  </friends>
+  <posts/>
+  <joboffers/>
+  <applications>
+    <application>
+      <jobOfferId>2</jobOfferId>
+    </application>
+  </applications>
+  <comments>
+    <comment>
+      <postId>1</postId>
+      <content>commentfrompstamatop</content>
+    </comment>
+  </comments>
+</user>
