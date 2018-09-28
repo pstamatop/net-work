@@ -25,3 +25,5 @@
 .DS_Store
 
 /spring/*.pid
+
+*.xml
