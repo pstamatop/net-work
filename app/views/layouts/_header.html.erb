@@ -3,7 +3,7 @@
     <%= link_to "net-work", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%=form_tag(users_path, :method => "get", class: 'input-group') do %>
+        <li class="search"><%=form_tag(users_path, :method => "get", class: 'input-group') do %>
           <%= text_field_tag :search, params[:search], class: 'form-control',  placeholder: "Search Users" %>
           <% end %>
         </li>

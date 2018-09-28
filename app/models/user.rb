@@ -70,8 +70,9 @@ class User < ApplicationRecord
   		users_checked = []
   		# implement current_user  as vector
   		curuser_tupple = []
+
+		instance_variable_set("@uservector_#{id}",[])
   		for offer in test_joboffers
-  			instance_variable_set("@uservector_#{id}",[])
   			if applies.find_by(:joboffer_id => offer.id)
   				# push value 1 if user has applied for this job
   				instance_variable_get("@uservector_#{id}").push(1)
@@ -113,7 +114,7 @@ class User < ApplicationRecord
 
   		classifier = Knn::Classifier.new(vectors, 9)
 
-		classifier.classify(curuser_tupple)
+		# classifier.classify(curuser_tupple)
   		get_from_knn = classifier.nearest_neighbours_to(curuser_tupple)
 
   		extra_via_knn = []
