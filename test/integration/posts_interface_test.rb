@@ -9,7 +9,6 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
   test "post interface" do
     log_in_as(@user)
     get root_path
-    assert_select 'div.pagination'
     # Invalid submission
     assert_no_difference 'Post.count' do
       post posts_path, params: { post: { content: "" } }
@@ -30,7 +29,7 @@ class PostsInterfaceTest < ActionDispatch::IntegrationTest
       delete post_path(first_post)
     end
     # Visit different user (no delete links)
-    get user_path(users(:archer))
+    get user_path(users(:panagiota))
     assert_select 'a', text: 'delete', count: 0
   end
 end
