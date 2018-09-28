@@ -20,6 +20,7 @@ gem 'carrierwave-video'
 gem 'rmagick'
 gem 'carrierwave-audio'
 gem 'knn', git: 'git://github.com/jonmidhir/ruby-knn.git'
+gem  'nokogiri'
 
 
 

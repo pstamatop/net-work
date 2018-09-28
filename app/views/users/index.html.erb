@@ -9,5 +9,9 @@
     <%= render @users %>
 </ul>
 
-
+<div class="export">
+<% if current_user.admin? %>
+		<%=link_to "Export to XML", export_path, method: :get%>
+<% end %>
+</div>
 

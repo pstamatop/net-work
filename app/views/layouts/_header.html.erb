@@ -3,10 +3,12 @@
     <%= link_to "net-work", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
+        <% if logged_in? %>
         <li class="search"><%=form_tag(users_path, :method => "get", class: 'input-group') do %>
           <%= text_field_tag :search, params[:search], class: 'form-control',  placeholder: "Search Users" %>
           <% end %>
         </li>
+        <% end %>
         <li class="<%= 'active' if current_page?(root_path) %>"><%=link_to "Home", root_path %></li>
         <% if logged_in? %>
           <% if current_user.admin? %> 

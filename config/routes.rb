@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   	get '/request_friendship/:id', to: 'friend_requests#request_friendship', as:'request'
   	delete '/delete_friendship/:id',to: 'friend_requests#delete_friendship', as:'delete'
   	delete '/delete_sent_friendship/:id',to: 'friend_requests#delete_request', as:'delete_sent'
+  	get '/export', to: 'users#export_all', as:'export'
 
   	resources :joboffers, only: [:create, :destroy, :index, :show]
 
