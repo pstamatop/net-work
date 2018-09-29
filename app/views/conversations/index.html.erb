@@ -1,13 +1,21 @@
 <% provide(:title, "Conversations") %>
-<% if logged_in? %>
+<% if not Conversation.where(:user_id => current_user.id).any? %>
+	<% if not Conversation.where(:receiver => current_user.id).any? %>
+		<h2> You have no messages. </h2>
+	<%end%>
+<% else %>
   <div class="row">
     <aside class="col-md-4">
        <h2> Conversations </h2>
      <%= render 'conversations/index' %>
     </aside>
     <div class="col-md-8">
-    	<% @message = Message.last %>
-    	<% @conversation = Conversation.find(@message.conversation_id) %>
+	<% if Message.any? %>
+    		<% @message = Message.last %>
+    		<% @conversation = Conversation.find(@message.conversation_id) %>
+	<% else %>
+		<% @conversation = Conversation.last %>
+	<% end %>
       <% @user = User.find(@conversation.receiver) %>
       <h3>Messages with <%= link_to [@user.firstName, @user.lastName].join(' '), @user %></h3>
       <br>
@@ -30,3 +38,4 @@
     </div>
   </div>
 <% end %>
+

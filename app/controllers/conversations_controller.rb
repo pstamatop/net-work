@@ -3,9 +3,10 @@ class ConversationsController < ApplicationController
   	#before_action :correct_user,   only: :destroy
 
   	def destroy
+      @conversation = Conversation.find(params[:id])
     	@conversation.destroy
     	flash[:success] = "Conversation deleted."
-    	redirect_to request.referrer
+    	redirect_to conversations_path
   	end
 
 	def show

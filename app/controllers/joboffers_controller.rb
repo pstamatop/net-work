@@ -16,7 +16,7 @@ class JoboffersController < ApplicationController
   def destroy
     @joboffer.destroy
     flash[:success] = "Job Offer deleted."
-    redirect_to request.referrer
+    redirect_to joboffers_path
   end
 
 
