@@ -36,7 +36,99 @@ class User < ApplicationRecord
 	end
 
 	def feed
-		#liked_posts = Post.where("id IN (?)",(friends.find {|f| f.likes.find {|l| l.post_id}}))
+		# KNN
+  		# remove my posts from test set
+  		test_posts = []
+  		for post in Post.all
+  			if post.user_id != id
+				test_posts.push(post)
+			end
+  		end
+
+  		if test_posts.length > 50
+  			# keep only 50 posts delete first n elements
+  			n =  test_posts.length-50
+  			test_posts.drop(n)
+
+  		end
+
+  		vectors = []
+  		users_checked = []
+  		# implement current_user  as vector
+  		curuser_tupple = []
+
+		instance_variable_set("@uservector_#{id}",[])
+  		for post in test_posts
+  			if likes.find_by(:post_id => post.id)
+  				# push value 1 if user liked this post
+  				instance_variable_get("@uservector_#{id}").push(1)
+  			elsif comments.find_by(:post_id => post.id)
+  				# push value 1 if user commented on this post
+  				instance_variable_get("@uservector_#{id}").push(1)
+  			else
+  				instance_variable_get("@uservector_#{id}").push(0)
+  			end
+  		end
+  		curuser_tupple = Knn::Vector.new(instance_variable_get("@uservector_#{id}"),id)
+  		vectors.push(curuser_tupple)
+  		users_checked.push(id)
+  		# implement his friends' friends as vectors
+  		
+  		for check_friend in friends
+  			for user in check_friend.friends
+  				user_tupple = []
+  				if friends.include? user
+  					# continue if friend is mutual
+  					next
+  				end
+  				# continue if user has been already checked
+  				if users_checked.include? user.id
+  					next
+  				end
+  				instance_variable_set("@uservector_#{user.id}",[])
+  				# first element of each vector is user's id
+  				#instance_variable_get("@uservector_#{user.id}").push(user.id)
+  				for post in test_posts
+  					if user.likes.find_by(:post_id => post.id)
+  						# push value 1 if user liked this post
+  						instance_variable_get("@uservector_#{id}").push(1)
+  					elsif user.comments.find_by(:post_id => post.id)
+  						# push value 1 if user commented on this post
+  						instance_variable_get("@uservector_#{id}").push(1)
+  					else
+  						instance_variable_get("@uservector_#{user.id}").push(0)
+  					end
+  				end
+  				vectors.push(Knn::Vector.new(instance_variable_get("@uservector_#{user.id}"),user.id))
+  				users_checked.push(user.id)
+  			end
+  		end
+
+  		classifier = Knn::Classifier.new(vectors, 9)
+
+		# classifier.classify(curuser_tupple)
+  		get_from_knn = classifier.nearest_neighbours_to(curuser_tupple)
+
+  		extra_via_knn = []
+  		for item in get_from_knn
+  			@user = User.find(item.label)
+  			# get the job offers that this user has applied
+  			for like in @user.likes
+  				@post = Post.find(like.post_id)
+  				if @post.user_id != id
+  					extra_via_knn.push(@post.id)
+  				end
+  			end
+  			for comment in @user.comments
+  				@post = Post.find(like.post_id)
+  				if @post.user_id != id
+  					if not extra_via_knn.include? post.id
+  						extra_via_knn.push(@post.id)
+  					end
+  				end
+  			end
+  		end
+
 		liked_posts = []
 
 		if friends.any?
@@ -49,7 +141,7 @@ class User < ApplicationRecord
           end
         end
     	#Post.where("user_id = ?", id)
-    	Post.where("user_id IN (?) OR user_id = ? OR id IN (?)", friends.ids, id, liked_posts)
+    	Post.where("user_id IN (?) OR user_id = ? OR id IN (?) OR id IN (?)", friends.ids, id, liked_posts, extra_via_knn)
   	end
 
   	def jobofferfeed
