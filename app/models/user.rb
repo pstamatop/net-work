@@ -218,21 +218,20 @@ class User < ApplicationRecord
 
 def conversation_partisipating(other_user)
   	if conversations.any?
-  			@conversation = conversations.find_by(:user_id => id)
+  			Conversation.where(:user_id => id).where(:receiver => other_user.id)
   	end
   	if @conversation.nil?
   		if other_user.conversations.any?
-  			@conversation = other_user.conversations.find_by(:user_id => other_user.id)
+  			Conversation.where(:user_id => other_user.id).where(:receiver => id)
   			if @conversation.nil?
-  				@conversation = Conversation.create(user_id: id, receiver: other_user.id)
+  				Conversation.create(user_id: id, receiver: other_user.id)
   				#conversations << Conversation.find(@conversation.id)
   			end
   		else 
-  			@conversation = Conversation.create(user_id: id, receiver: other_user.id)
+  			Conversation.create(user_id: id, receiver: other_user.id)
   			#conversations << Conversation.find(@conversation.id)
   		end
   	end
-  	Conversation.find(@conversation.id)
   end
 
 
