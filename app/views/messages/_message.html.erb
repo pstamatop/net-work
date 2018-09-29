@@ -1,0 +1,22 @@
+<li>
+  <% @user = User.find(message.user_id) %>
+  <% if @user.id == current_user.id %>
+  <div align=right>
+    <%else%>
+    <div align=left>
+  <% end %>
+  <b><%= [@user.firstName, @user.lastName].join(' ') %></b></span><br>
+  <span>
+  	<%= message.content %>
+  </span>
+  <span class="mtimestamp">
+    <%= message.created_at %>
+  	<% if current_user.id == message.user_id %>
+    	<% @conversation = Conversation.find(message.conversation_id) %>
+      <font size="2"><%= link_to "Delete message",   conversation_message_path(@conversation.id,message.id), method: :delete,
+                                       data: { confirm: "Are you sure you want to delete this message?" } %></font>
+    <% end %>
+  </span>
+</div>
+<br>
+</li>

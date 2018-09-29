@@ -210,11 +210,11 @@ def conversation_partisipating(other_user)
   			@conversation = other_user.conversations.find_by(:user_id => other_user.id)
   			if @conversation.nil?
   				@conversation = Conversation.create(user_id: id, receiver: other_user.id)
-  				conversations << Conversation.find(@conversation.id)
+  				#conversations << Conversation.find(@conversation.id)
   			end
   		else 
   			@conversation = Conversation.create(user_id: id, receiver: other_user.id)
-  			conversations << Conversation.find(@conversation.id)
+  			#conversations << Conversation.find(@conversation.id)
   		end
   	end
   	Conversation.find(@conversation.id)
