@@ -16,6 +16,10 @@
     <% end %>
     <% if logged_in? && @user.friends_with?(current_user) %>
     	<%= link_to "Posts", user_posts_path(@user), class: "btn btn-lg btn-default" %>
+       <br><br>
+      <% @conversation = current_user.conversation_partisipating(@user)%>
+      <%= link_to "Send message", conversation_path(@conversation), class: "btn btn-lg btn-default" %>
+      <br><br>
     <% end %>
 
     <% if logged_in? && !@user.friends_with?(current_user) && @user != current_user && !current_user.pending_from?(@user) && !current_user.pending_to?(@user) %>

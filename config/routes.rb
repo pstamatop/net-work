@@ -41,5 +41,10 @@ Rails.application.routes.draw do
 	resources :joboffers do
 		resources :applies, only: [:create, :destroy, :index]
 	end
+
+	resources :conversations,          only: [:create, :destroy, :show, :index]
+	resources :conversations do
+    	resources :messages,  only: [:destroy, :index]
+  	end
 	# TODO check routes
 end

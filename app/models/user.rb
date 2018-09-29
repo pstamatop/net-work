@@ -9,6 +9,8 @@ class User < ApplicationRecord
 	has_many :friend_requests, dependent: :destroy, source: 'receiver_id'
 	has_many :joboffers, dependent: :destroy
 	has_many :applies, dependent: :destroy
+	has_many :conversations, dependent: :destroy
+	has_many :messages, dependent: :destroy
 
 	has_and_belongs_to_many :tskills
 
@@ -199,7 +201,24 @@ class User < ApplicationRecord
     Comment.where("id IN (?)", total_com_interact).order('updated_at DESC')
   end
 
-
+def conversation_partisipating(other_user)
+  	if conversations.any?
+  			@conversation = conversations.find_by(:user_id => id)
+  	end
+  	if @conversation.nil?
+  		if other_user.conversations.any?
+  			@conversation = other_user.conversations.find_by(:user_id => other_user.id)
+  			if @conversation.nil?
+  				@conversation = Conversation.create(user_id: id, receiver: other_user.id)
+  				conversations << Conversation.find(@conversation.id)
+  			end
+  		else 
+  			@conversation = Conversation.create(user_id: id, receiver: other_user.id)
+  			conversations << Conversation.find(@conversation.id)
+  		end
+  	end
+  	Conversation.find(@conversation.id)
+  end
 
 
   	def friends

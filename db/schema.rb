@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180926110614) do
+ActiveRecord::Schema.define(version: 20180929001457) do
 
   create_table "applies", force: :cascade do |t|
     t.integer "user_id"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(version: 20180926110614) do
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "receiver"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "updated_at"], name: "index_conversations_on_user_id_and_updated_at"
+    t.index ["user_id"], name: "index_conversations_on_user_id"
   end
 
   create_table "friend_requests", force: :cascade do |t|
@@ -65,6 +74,17 @@ ActiveRecord::Schema.define(version: 20180926110614) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_likes_on_post_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.integer "user_id"
+    t.integer "conversation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id", "created_at"], name: "index_messages_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
