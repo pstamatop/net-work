@@ -13,7 +13,13 @@
   <br>
   <%= link_to "View conversation", conversation_path(conversation) %>
   <span class="timestamp">
-    Updated <%= time_ago_in_words(conversation.updated_at) %> ago.<br>
+    <% if conversation.messages.any? %>
+      <% @message = Message.where(:conversation_id => conversation.id).last %>
+    Updated <%= time_ago_in_words(@message.created_at) %> ago.<br>
+    <%else%>
+      Updated <%= time_ago_in_words(conversation.created_at) %> ago.<br>
+    <%end%>
+
      <font size="2"> <%= link_to "Delete conversation",  conversation_path(conversation.id), method: :delete,
                                        data: { confirm: "Are you sure you want to delete this conversation?" } %></font>
   </span>

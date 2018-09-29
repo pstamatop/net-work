@@ -16,7 +16,7 @@
           <% end %>
           <li class="<%= 'active' if current_page?(user_friendships_path(@current_user)) %>"><%= link_to "My Net-work", user_friendships_path(@current_user) %></li>
           <li class="<%= 'active' if current_page?(joboffers_path) %>"><%=link_to "Job Offers", joboffers_path%></li>
-          <li><%= link_to "Messages", '#' %></li>
+          <li class="<%= 'active' if current_page?(conversations_path) %>"><%= link_to "Messages", conversations_path%></li>
           <% if current_user.pending_requests.any? %>
             <li class="<%= 'active' if current_page?(user_friend_requests_path(@current_user)) %>" id="notifications">
               <%= link_to "Notifications (#{@current_user.pending_requests.count})" , user_friend_requests_path(@current_user)%>

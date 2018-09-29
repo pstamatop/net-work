@@ -1,0 +1,32 @@
+<% provide(:title, "Conversations") %>
+<% if logged_in? %>
+  <div class="row">
+    <aside class="col-md-4">
+       <h2> Conversations </h2>
+     <%= render 'conversations/index' %>
+    </aside>
+    <div class="col-md-8">
+    	<% @message = Message.last %>
+    	<% @conversation = Conversation.find(@message.conversation_id) %>
+      <% @user = User.find(@conversation.receiver) %>
+      <h3>Messages with <%= link_to [@user.firstName, @user.lastName].join(' '), @user %></h3>
+      <br>
+      <% if @conversation.messages.any? %>
+      <ol class="posts">
+        <%= render 'messages/index'%>
+      </ol>
+    <% end %>
+    <br>
+     <section class="post_form">
+         <%= form_for([@conversation,@conversation.messages.build]) do |f| %>
+   			 <%= render 'shared/error_messages', object: f.object %>
+    		<div class="field">
+     		<%= f.text_area :content, placeholder: "Type a message..." %>
+    		</div>
+    		<%= f.submit "Send", class: "btn btn-sm" %>
+ 		<% end %>
+     </section>
+      
+    </div>
+  </div>
+<% end %>

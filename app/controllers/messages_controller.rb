@@ -8,6 +8,8 @@ class MessagesController < ApplicationController
     @message.user_id = current_user.id
     if @message.save
       flash[:success] = "Message sent!"
+      @conversation.updated_at = @message.created_at
+      @conversation.save
       redirect_to request.referrer
     end
   end
