@@ -1,0 +1,20 @@
+<li>
+  <% if conversation.receiver == current_user.id %>
+    <% @user = User.find(conversation.user_id) %>
+  <%else%>
+    <% @user = User.find(conversation.receiver) %>
+  <%end%>
+  <% if @user.profilepic.present? %>
+    <div class ="smallavatar"><%= link_to image_tag(@user.profilepic.url,  size: 50), @user %></div>
+  <% else %>
+     <div class ="smallavatar"><%= link_to image_tag("default-avatar.png", size: 50), @user %></div>
+  <% end %>
+  <span class="user"><%= link_to [@user.firstName, @user.lastName].join(' '), @user %></span>
+  <br>
+  <%= link_to "View conversation", conversation_path(conversation) %>
+  <span class="timestamp">
+    Updated <%= time_ago_in_words(conversation.updated_at) %> ago.<br>
+     <font size="2"> <%= link_to "Delete conversation",  conversation_path(conversation.id), method: :delete,
+                                       data: { confirm: "Are you sure you want to delete this conversation?" } %></font>
+  </span>
+</li>

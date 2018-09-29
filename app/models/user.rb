@@ -154,6 +154,21 @@ class User < ApplicationRecord
     	Joboffer.where("user_id IN (?) OR id IN (?) OR id IN (?)", friends.ids, extra_via_skills, extra_via_knn)
   	end
 
+
+  	def conversationfeed
+		participating_conv = []
+
+        for conversation in Conversation.all
+        	if conversation.user_id == id || conversation.receiver == id
+        		participating_conv.push(conversation.id)
+        	end
+        end
+
+    	Conversation.where("id IN (?)", participating_conv).order('updated_at DESC')
+  	end
+
+
+
   	def get_applies
   		total_applies = []
 

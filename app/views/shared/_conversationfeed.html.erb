@@ -1,0 +1,6 @@
+<% if @conversations.any? %>
+  <ol class="posts">
+    <%= render @conversations %>
+  </ol>
+  <%= will_paginate @conversations %>
+<% end %>
