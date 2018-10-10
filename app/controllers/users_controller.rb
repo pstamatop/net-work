@@ -5,6 +5,11 @@ class UsersController < ApplicationController
 
     def destroy
 		User.find(params[:id]).destroy
+		for freq in FriendRequest.all
+        	if freq.request_sender == params[:id] || freq.request_receiver == params[:id] 
+        		freq.destroy
+        	end
+        end
 		flash[:success] = "User deleted"
 		redirect_to users_url
     end

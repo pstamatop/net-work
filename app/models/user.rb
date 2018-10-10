@@ -6,7 +6,7 @@ class User < ApplicationRecord
   	has_many :posts, dependent: :destroy
   	has_many :likes, dependent: :destroy
   	has_many :comments, dependent: :destroy
-	has_many :friend_requests, dependent: :destroy, source: 'receiver_id'
+	has_many :friend_requests, source: 'receiver_id'
 	has_many :joboffers, dependent: :destroy
 	has_many :applies, dependent: :destroy
 	has_many :conversations, dependent: :destroy
