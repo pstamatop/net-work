@@ -3,7 +3,9 @@
 	<% if not Conversation.where(:receiver => current_user.id).any? %>
 		<h2> You have no messages. </h2>
 	<%end%>
-<% else %>
+<% end %>
+
+<% if Conversation.where(:user_id => current_user.id).any? || Conversation.where(:receiver => current_user.id).any? %>
   <div class="row">
     <aside class="col-md-4">
        <h2> Conversations </h2>

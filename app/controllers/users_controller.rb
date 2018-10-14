@@ -10,6 +10,11 @@ class UsersController < ApplicationController
         		freq.destroy
         	end
         end
+        for conversation in Conversation.all
+        	if conversation.user_id == params[:id] || conversation.receiver == params[:id] 
+        		conversation.destroy
+        	end
+        end
 		flash[:success] = "User deleted"
 		redirect_to users_url
     end
