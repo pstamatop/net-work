@@ -221,11 +221,11 @@ input {
 
 
 .navbar-inverse .navbar-nav > li > a {
-  color: black;
+  /*color: black;*/
 }
 
 .navbar {
-  background-color: #8f9a9a ;
+  background-color: #1E2424 ;   
  }
 
 /* Disable resizing for some browsers */
@@ -348,9 +348,10 @@ span.picture {
   border: transparent;
 }
 
+
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
     color: #fff;
-    background-color: #8f9a9a;
+    background-color: #1E2424;
 }
 
 .export{
@@ -363,7 +364,3 @@ span.picture {
   margin-top: 20px;
   margin-left: 5px;
 }
-
-
-
-
