@@ -1,4 +1,5 @@
 ## LinkedIn-like application
+Functional web app including user registration, administrative role, search functions, friend requests, feed, user messages and notifications. Implemented Nearest Neighbour Collaborative Filtering for job offer recommendations.
 
 ### Getting started
 ```
